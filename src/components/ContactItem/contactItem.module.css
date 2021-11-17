@@ -1,0 +1,42 @@
+.contactItem {
+  margin-bottom: 15px;
+}
+.name {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 20px;
+  color: rgba(49, 45, 45, 0.986);
+  margin-right: 15px;
+}
+.number {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 20px;
+  color: rgba(26, 24, 24, 0.692);
+  margin-right: 20px;
+  justify-content: center;
+}
+.btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 20px;
+  margin-right: 50px;
+  background-color: rgb(245, 236, 115);
+  color: rgb(240, 16, 16);
+  border: none;
+  cursor: pointer;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn:hover {
+  transform: scale(1.5);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
