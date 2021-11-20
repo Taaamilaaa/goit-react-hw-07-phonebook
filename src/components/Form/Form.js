@@ -1,83 +1,69 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from "./form.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { addContact } from "../../redux/contacts/actions";
-import { getContactsList } from "../../redux/contacts/contacts-selectors";
+import { notifySuccess, notifyWarning } from "toaster/toaster";
+
+import {
+  useFetchContactsQuery,
+  useAddContactMutation,
+} from "redux/contacts/contactsSlice";
 
 const Form = () => {
-  const contactList = useSelector(getContactsList);
-  const dispatch = useDispatch();
-
-  const nameInputId = uuid();
-  const numberInputId = uuid();
+  const { data: contacts } = useFetchContactsQuery();
+  const [addContact, { isLoading }] = useAddContactMutation();
 
   const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleChangeNumber = (e) => {
-    setNumber(e.target.value);
-  };
-
+  const handleChangeName = (e) => setName(e.target.value);  
+  const handleChangeNumber = (e) => setPhone(e.target.value);
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newContact = {
       id: uuid(),
       name: name,
-      number: number,
+      phone: phone,
     };
 
-    const renderedNames = contactList.find(
-      ({name}) => name.toLowerCase() === newContact.name.toLowerCase()
+    const renderedNames = contacts.find(
+      ({ name }) => name.toLowerCase() === newContact.name.toLowerCase()
     );
     if (renderedNames) {
-      alert(`${newContact.name} is already on contacts`);
+      notifyWarning(`${newContact.name} is already on contacts`);
       setName("");
-      setNumber("");
+      setPhone("");     
       return;
-    };
-    dispatch(addContact(newContact));    
+    }
+    addContact(newContact);
+    notifySuccess(`New contact ${newContact.name} is created`);  
     setName("");
-    setNumber("");
+    setPhone("");    
   };
 
-  return (
+  return (    
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label className={styles.label} htmlFor={nameInputId}>
-        Name
-      </label>
+      <label className={styles.label}>Name</label>
       <input
         className={styles.input}
         type="text"
-        name="name"
         value={name}
-        id={nameInputId}
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title=""
         required
         onChange={handleChangeName}
       />
-      <label className={styles.label} htmlFor={numberInputId}>
-        Number
-      </label>
+      <label className={styles.label}>Number</label>
       <input
         className={styles.input}
         type="tel"
-        name="number"
-        value={number}
-        id={numberInputId}
+        value={phone}
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title=""
         required
         onChange={handleChangeNumber}
       />
-      <button className={styles.submitBtn} type="submit">
-        Add contact
+      <button className={styles.submitBtn} disabled={isLoading} type="submit">
+        {isLoading && "Create..."}
+        {!isLoading && " Add contact"}       
       </button>
     </form>
   );

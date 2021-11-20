@@ -1,16 +1,19 @@
 import styles from "./filter.module.css";
 import PropTypes from "prop-types";
-import { filterContact } from "../../redux/contacts/actions";
-import { useDispatch } from "react-redux";
+// import { filterContact } from "redux/contacts/actions";
+// import { useState } from "react";
+// import {useFetchContactsQuery} from "redux/contacts/contactsSlice"
 
-const Filter = () => {
-  const dispatch = useDispatch();
+const Filter = ({onFilterChange}) => {
+  const onChange = (e) => {
+    onFilterChange(e.currentTarget.value);
+ };
   return (
     <>
       <label className={styles.label}>Find contacts by name</label>
       <input
         className={styles.input}
-        onChange={(e) => dispatch(filterContact(e.currentTarget.value))}
+        onChange={onChange}
       />
     </>
   );
