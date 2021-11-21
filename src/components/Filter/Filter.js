@@ -1,8 +1,5 @@
 import styles from "./filter.module.css";
 import PropTypes from "prop-types";
-// import { filterContact } from "redux/contacts/actions";
-// import { useState } from "react";
-// import {useFetchContactsQuery} from "redux/contacts/contactsSlice"
 
 const Filter = ({onFilterChange}) => {
   const onChange = (e) => {

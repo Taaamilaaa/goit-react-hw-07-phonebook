@@ -5,7 +5,7 @@ import { useFetchContactsQuery } from "redux/contacts/contactsSlice";
 
 const ContactList = ({ filter }) => {
   
-  const { data: contacts } = useFetchContactsQuery();
+  const { data: contacts, isFetching } = useFetchContactsQuery();
 
   const getVisibleContacts = (contactsArr, filter) => {
     if (contactsArr) {
@@ -19,7 +19,7 @@ const ContactList = ({ filter }) => {
 
   return (
     <ul className={styles.list}>
-      {contacts ? (visibleContacts.map(contact =>
+      {contacts  ? (visibleContacts.map(contact =>
         <ContactItem
           key={contact.id}
           id={contact.id}
