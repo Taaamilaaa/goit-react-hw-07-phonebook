@@ -5,7 +5,7 @@ import { useFetchContactsQuery } from "redux/contacts/contactsSlice";
 
 const ContactList = ({ filter }) => {
   
-  const { data: contacts, isFetching } = useFetchContactsQuery();
+  const { data: contacts } = useFetchContactsQuery();
 
   const getVisibleContacts = (contactsArr, filter) => {
     if (contactsArr) {

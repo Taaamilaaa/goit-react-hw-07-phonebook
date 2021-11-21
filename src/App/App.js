@@ -20,12 +20,14 @@ const App = () => {
       <Container>
         <Form />
       </Container>
-
-      <Container title="Contacts">
-        <Filter onFilterChange={onFilterChange} />
-        {isFetching && <h1>Loading...</h1>}
-        <ContactList filter={filter} />
-      </Container>
+      
+      {contacts &&
+        <Container title="Contacts">
+          <Filter onFilterChange={onFilterChange} />
+          <ContactList filter={filter} />
+        </Container>
+      }
+      {isFetching && <h1>Loading...</h1>}
 
       <Toaster />
     </Container>
