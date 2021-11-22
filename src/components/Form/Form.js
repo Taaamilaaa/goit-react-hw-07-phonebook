@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
-import styles from "./form.module.css";
-import { notifySuccess, notifyWarning } from "toaster/toaster";
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import styles from './form.module.css';
+import { notifySuccess, notifyWarning } from 'toaster/toaster';
 
 import {
   useFetchContactsQuery,
   useAddContactMutation,
-} from "redux/contacts/contactsSlice";
+} from 'redux/contacts/contactsSlice';
 
 const Form = () => {
   const { data: contacts } = useFetchContactsQuery();
   const [addContact, { isLoading }] = useAddContactMutation();
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
 
-  const handleChangeName = (e) => setName(e.target.value);  
-  const handleChangeNumber = (e) => setPhone(e.target.value);
-  const handleSubmit = (e) => {
+  const handleChangeName = e => setName(e.target.value);
+  const handleChangeNumber = e => setPhone(e.target.value);
+  const handleSubmit = e => {
     e.preventDefault();
 
     const newContact = {
@@ -27,23 +27,23 @@ const Form = () => {
     };
 
     const renderedNames = contacts.find(
-      ({ name }) => name.toLowerCase() === newContact.name.toLowerCase()
+      ({ name }) => name.toLowerCase() === newContact.name.toLowerCase(),
     );
     if (renderedNames) {
       notifyWarning(`${newContact.name} is already on contacts`);
-      setName("");
-      setPhone("");     
+      setName('');
+      setPhone('');
       return;
     }
     addContact(newContact);
-    notifySuccess(`New contact ${newContact.name} is created`);  
-    setName("");
-    setPhone("");    
+    notifySuccess(`New contact ${newContact.name} is created`);
+    setName('');
+    setPhone('');
   };
 
-  return (    
+  return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label className={styles.label}>Name</label>
+      <label className={styles.label}>Name:</label>
       <input
         className={styles.input}
         type="text"
@@ -52,7 +52,7 @@ const Form = () => {
         required
         onChange={handleChangeName}
       />
-      <label className={styles.label}>Number</label>
+      <label className={styles.label}>Number:</label>
       <input
         className={styles.input}
         type="tel"
@@ -62,8 +62,8 @@ const Form = () => {
         onChange={handleChangeNumber}
       />
       <button className={styles.submitBtn} disabled={isLoading} type="submit">
-        {isLoading && "Create..."}
-        {!isLoading && " Add contact"}       
+        {isLoading && 'Create...'}
+        {!isLoading && ' Add contact'}
       </button>
     </form>
   );
